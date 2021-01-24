@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bhq-stats
+  namespace: baseball
+spec:
+  selector:
+    app: bhq-stats
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: bhq-stats
