@@ -44,13 +44,15 @@ namespace FantasyBaseball.BhqStatsService.Converters.UnitTets
         [InlineData("mIl", "MIL")]
         [InlineData(""   , ""   )]
         [InlineData(null , ""   )]
-        public void ConvertFromStringTest(string value, string expected) => Assert.Equal(expected, new TeamConverter().ConvertFromString(value, null, null));
+        public void ConvertFromStringTest(string value, string expected) => 
+            Assert.Equal(expected, new TeamConverter().ConvertFromString(value, null, null));
 
         [Theory]
         [InlineData("MIL", "MIL")]
         [InlineData("mil", "MIL")]
         [InlineData("TAM", "TB" )]
         [InlineData(null , ""   )]
-        public void ConvertToStringTest(object value, string expected) => Assert.Equal(expected, new TeamConverter().ConvertToString(value, null, null));
+        public void ConvertToStringTest(object value, string expected) => 
+            Assert.Equal(expected, new TeamConverter().ConvertToString(value, null, null));
     }
 }
