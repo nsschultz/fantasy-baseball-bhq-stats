@@ -1,7 +1,6 @@
-using FantasyBaseball.BhqStatsService.Converters;
 using Xunit;
 
-namespace FantasyBaseball.BhqStatsService.UnitTests.Converters
+namespace FantasyBaseball.BhqStatsService.Converters.UnitTets
 {
     public class TeamConverterTest
     {

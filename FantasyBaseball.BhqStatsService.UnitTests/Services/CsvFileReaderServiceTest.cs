@@ -1,11 +1,9 @@
-using FantasyBaseball.BhqStatsService.Models;
-using FantasyBaseball.BhqStatsService.Services;
-using FantasyBaseball.Common.Exceptions;
-using System.Collections.Generic;
 using System.Linq;
+using FantasyBaseball.BhqStatsService.Models;
+using FantasyBaseball.Common.Exceptions;
 using Xunit;
 
-namespace FantasyBaseball.BhqStatsService.UnitTests.Services
+namespace FantasyBaseball.BhqStatsService.Services.UnitTets
 {
     public class CsvFileReaderServiceTest
     {
