@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using FantasyBaseball.BhqStatsService.Controllers;
 using FantasyBaseball.BhqStatsService.Models;
 using FantasyBaseball.BhqStatsService.Services;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
 
-namespace FantasyBaseball.BhqStatsService.UnitTests.Controllers
+namespace FantasyBaseball.BhqStatsService.Controllers.UnitTests
 {
     public class BhqStatsControllerTest
     {

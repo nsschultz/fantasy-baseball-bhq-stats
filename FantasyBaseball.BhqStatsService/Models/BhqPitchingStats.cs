@@ -1,4 +1,4 @@
-using FantasyBaseball.CommonModels.Player;
+using FantasyBaseball.Common.Models;
 
 namespace FantasyBaseball.BhqStatsService.Models
 {

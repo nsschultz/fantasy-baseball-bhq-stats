@@ -2,7 +2,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using FantasyBaseball.BhqStatsService.Converters;
 using FantasyBaseball.BhqStatsService.Models;
-using FantasyBaseball.CommonModels.Enums;
+using FantasyBaseball.Common.Enums;
 
 namespace FantasyBaseball.BhqStatsService.CsvMaps
 {
@@ -12,16 +12,16 @@ namespace FantasyBaseball.BhqStatsService.CsvMaps
         /// <summary>Creates a new instance of the mapper.</summary>
         public BhqBattingStatsMap()
         {
-            Map(m => m.PlayerInfo.Id).Name("PLAYERPLAYERID");
-            Map(m => m.PlayerInfo.Type).Name("PLAYERPLAYERID").ConvertUsing((IReaderRow value) => PlayerType.B);
-            Map(m => m.PlayerInfo.Status).Name("PLAYERPLAYERID").ConvertUsing((IReaderRow value) => PlayerStatus.NE);
-            Map(m => m.PlayerInfo.LastName).Name("PLAYERLASTNAME");
-            Map(m => m.PlayerInfo.FirstName).Name("PLAYERFIRSTNAME");
-            Map(m => m.PlayerInfo.Age).Name("PLAYERAGE");
-            Map(m => m.PlayerInfo.Positions).Name("PLAYERPOS").ConvertUsing((IReaderRow value) => "DH");
-            Map(m => m.PlayerInfo.Team).Name("PLAYERTM").TypeConverter<TeamConverter>();
-            Map(m => m.BhqScores.Reliability).Name("PLAYERMM CODE").TypeConverter<ReliabilityConverter>();
-            Map(m => m.BhqScores.MayberryMethod).Name("PLAYERMM");
+            Map(m => m.BhqId).Name("PLAYERPLAYERID");
+            Map(m => m.Type).Name("PLAYERPLAYERID").ConvertUsing((IReaderRow value) => PlayerType.B);
+            Map(m => m.Status).Name("PLAYERPLAYERID").ConvertUsing((IReaderRow value) => PlayerStatus.NE);
+            Map(m => m.LastName).Name("PLAYERLASTNAME");
+            Map(m => m.FirstName).Name("PLAYERFIRSTNAME");
+            Map(m => m.Age).Name("PLAYERAGE");
+            Map(m => m.Positions).Name("PLAYERPOS").ConvertUsing((IReaderRow value) => "DH");
+            Map(m => m.Team).Name("PLAYERTM").TypeConverter<TeamConverter>();
+            Map(m => m.Reliability).Name("PLAYERMM CODE").TypeConverter<ReliabilityConverter>();
+            Map(m => m.MayberryMethod).Name("PLAYERMM");
             Map(m => m.YearToDateBattingStats.AtBats).Name("YTDAB");
             Map(m => m.YearToDateBattingStats.Runs).Name("YTDR");
             Map(m => m.YearToDateBattingStats.Hits).Name("YTDH");

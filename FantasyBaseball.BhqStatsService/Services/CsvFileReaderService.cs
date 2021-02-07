@@ -6,7 +6,7 @@ using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 using FantasyBaseball.BhqStatsService.CsvMaps;
-using FantasyBaseball.CommonModels.Exceptions;
+using FantasyBaseball.Common.Exceptions;
 
 namespace FantasyBaseball.BhqStatsService.Services
 {

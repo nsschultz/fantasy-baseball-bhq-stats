@@ -7,8 +7,13 @@
     <ProjectReference Include="..\FantasyBaseball.BhqStatsService\FantasyBaseball.BhqStatsService.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FantasyBaseball.CommonModels">
-      <HintPath>..\..\libs\FantasyBaseball.CommonModels.dll</HintPath>
+    <Reference Include="FantasyBaseball.Common.Exceptions">
+      <HintPath>..\..\libs\FantasyBaseball.Common.Exceptions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FantasyBaseball.Common.Models">
+      <HintPath>..\..\libs\FantasyBaseball.Common.Models.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -16,5 +21,8 @@
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="test.csv" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
