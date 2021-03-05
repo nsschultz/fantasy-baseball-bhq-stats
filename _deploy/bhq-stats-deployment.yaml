@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: bhq-stats
-        image: nschultz/fantasy-baseball-bhq-stats:0.6.0
+        image: nschultz/fantasy-baseball-bhq-stats:{{version}}
         volumeMounts:
         - name: bhq-stats-data-volume
           mountPath: "/app/data"
