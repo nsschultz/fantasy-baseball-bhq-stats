@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'builder' }
     environment {
-        VERSION_NUMBER = '0.6.0'
+        VERSION_NUMBER = '0.7.0'
         IMAGE_VERSION = "${GIT_BRANCH == "main" ? VERSION_NUMBER : VERSION_NUMBER+"-"+GIT_BRANCH}"
         DOCKER_HUB = credentials("dockerhub-creds")
     }
@@ -20,8 +20,10 @@ pipeline {
             agent { label 'manager' }
             steps { script { sh """
                 #!/bin/bash
+                sed -i "s/{{version}}/${VERSION_NUMBER}/g" ./_deploy/bhq-stats-deployment.yaml
                 kubectl apply -f ./_deploy/bhq-stats-deployment.yaml
                 kubectl apply -f ./_deploy/bhq-stats-service.yaml
+                kubectl apply -f ./_deploy/bhq-stats-ingress.yaml
             """ } }
         }
     }
