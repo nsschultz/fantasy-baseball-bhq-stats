@@ -41,6 +41,7 @@ namespace FantasyBaseball.BhqStatsService
                     builder.WithOrigins("http://*.schultz.local", "http://localhost").SetIsOriginAllowedToAllowWildcardSubdomains()))
                 .AddSingleton(Configuration)
                 .AddSingleton<ICsvFileReaderService, CsvFileReaderService>()
+                .AddSingleton<ICsvFileUploaderService, CsvFileUploaderService>()
                 .AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()))
                 .AddControllers();
     }
