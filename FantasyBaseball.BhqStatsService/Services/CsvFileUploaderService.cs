@@ -14,7 +14,8 @@ namespace FantasyBaseball.BhqStatsService.Services
         public async Task UploadFile(HttpRequest request, string fileName)
         {
             var file = await GetFileFromRequest(request);
-            using var stream = new FileStream(fileName, FileMode.OpenOrCreate);
+            File.Delete(fileName);
+            using var stream = new FileStream(fileName, FileMode.Create);
             await file.CopyToAsync(stream);
         }
 
