@@ -3,7 +3,6 @@ bin/
 obj/
 # test data
 bak/
-data/
 libs/
 reports/
 # vs code files

@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FantasyBaseball.BhqStatsService.FileReaders;
 using FantasyBaseball.BhqStatsService.Models;
 using FantasyBaseball.BhqStatsService.Services;
+using FantasyBaseball.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -26,18 +29,32 @@ namespace FantasyBaseball.BhqStatsService.Controllers
 
         /// <summary>Gets all of the batters from the BHQ stats source.</summary>
         /// <returns>All of the batters from the BHQ stats source.</returns>
-        [HttpGet("batters")] public IEnumerable<BhqBattingStats> GetBatters() =>
-            _fileReaderService.ReadCsvData<BhqBattingStats>(_configuration.GetValue<string>("CsvFiles:BatterFile"));
+        [HttpGet("batters")] public async Task<IEnumerable<BhqBattingStats>> GetBatters() =>
+            await _fileReaderService.ReadCsvData<BhqBattingStats>(new FileReader(_configuration.GetValue<string>("CsvFiles:BatterFile")));
 
         /// <summary>Gets all of the pitchers from the BHQ stats source.</summary>
         /// <returns>All of the pitchers from the BHQ stats source.</returns>
-        [HttpGet("pitchers")] public IEnumerable<BhqPitchingStats> GetPitchers() =>
-            _fileReaderService.ReadCsvData<BhqPitchingStats>(_configuration.GetValue<string>("CsvFiles:PitcherFile"));
+        [HttpGet("pitchers")] public async Task<IEnumerable<BhqPitchingStats>> GetPitchers() =>
+            await _fileReaderService.ReadCsvData<BhqPitchingStats>(new FileReader(_configuration.GetValue<string>("CsvFiles:PitcherFile")));
 
-        [HttpPost("batters/upload")] public async Task UploadBatterFile() => 
-            await _fileUploadService.UploadFile(Request, _configuration.GetValue<string>("CsvFiles:BatterFile"));
+        /// <summary>Overwrites the underlying batter.csv file.</summary>
+        [HttpPost("batters/upload")] public async Task UploadBatterFile() => await UploadFile<BhqBattingStats>("CsvFiles:BatterFile");
+        
+        /// <summary>Overwrites the underlying pitcher.csv file.</summary>
+        [HttpPost("pitchers/upload")] public async Task UploadPitcherFile() => await UploadFile<BhqPitchingStats>("CsvFiles:PitcherFile");
 
-        [HttpPost("pitchers/upload")] public async Task UploadPitcherFile() => 
-            await _fileUploadService.UploadFile(Request, _configuration.GetValue<string>("CsvFiles:PitcherFile"));
+        private async Task UploadFile<T>(string filePath)
+        {
+            var fileReader = new FormFileReader(Request);
+            try
+            {
+                await _fileReaderService.ReadCsvData<T>(fileReader);
+            }
+            catch (Exception)
+            {
+                throw new BadRequestException("Invalid file type");
+            }
+            await _fileUploadService.UploadFile(fileReader, _configuration.GetValue<string>(filePath));
+        }
     }
 }
