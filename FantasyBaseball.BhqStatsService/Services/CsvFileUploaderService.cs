@@ -1,7 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
-using FantasyBaseball.Common.Exceptions;
-using Microsoft.AspNetCore.Http;
+using FantasyBaseball.BhqStatsService.FileReaders;
 
 namespace FantasyBaseball.BhqStatsService.Services
 {
@@ -9,21 +8,15 @@ namespace FantasyBaseball.BhqStatsService.Services
     public class CsvFileUploaderService : ICsvFileUploaderService
     {
         /// <summary>Reads the file off the HTTP request and saves it to file system.</summary>
-        /// <param name="request">The HTTP request that was submitted.</param>
+        /// <param name="fileReader">Helper for reading the contents of a file.</param>
         /// <param name="fileName">The file name to process.</param>
-        public async Task UploadFile(HttpRequest request, string fileName)
+        public async Task UploadFile(IFileReader fileReader, string fileName)
         {
-            var file = await GetFileFromRequest(request);
+            var lines = await fileReader.ReadLines();
             File.Delete(fileName);
             using var stream = new FileStream(fileName, FileMode.Create);
-            await file.CopyToAsync(stream);
-        }
-
-        private static async Task<IFormFile> GetFileFromRequest(HttpRequest request)
-        {
-            var files = (await request.ReadFormAsync()).Files;
-            if (files.Count == 0) throw new BadRequestException("There are no files attached.");
-            return files[0];
+            using var writer = new StreamWriter(stream);
+            foreach (var line in lines) await writer.WriteLineAsync(line);
         }
     }
 }

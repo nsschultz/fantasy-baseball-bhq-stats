@@ -23,6 +23,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="test.csv" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="data/test-batter.csv" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="data/test-pitcher.csv" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

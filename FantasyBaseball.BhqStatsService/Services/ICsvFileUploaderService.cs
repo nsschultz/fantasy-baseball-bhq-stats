@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using FantasyBaseball.BhqStatsService.FileReaders;
 
 namespace FantasyBaseball.BhqStatsService.Services
 {
@@ -7,8 +7,8 @@ namespace FantasyBaseball.BhqStatsService.Services
     public interface ICsvFileUploaderService
     {
         /// <summary>Reads the file off the HTTP request and saves it to file system.</summary>
-        /// <param name="request">The HTTP request that was submitted.</param>
+        /// <param name="fileReader">Helper for reading the contents of a file.</param>
         /// <param name="fileName">The file name to process.</param>
-        Task UploadFile(HttpRequest request, string fileName);
+        Task UploadFile(IFileReader fileReader, string fileName);
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using FantasyBaseball.BhqStatsService.CsvMaps;
-using FantasyBaseball.Common.Exceptions;
+using FantasyBaseball.BhqStatsService.FileReaders;
 
 namespace FantasyBaseball.BhqStatsService.Services
 {
@@ -23,12 +24,11 @@ namespace FantasyBaseball.BhqStatsService.Services
         }
 
         /// <summary>Reads in data from the given CSV file.</summary>
-        /// <param name="fileName">The file name to process.</param>
+        /// <param name="fileReader">Helper for reading the contents of a file.</param>
         /// <returns>All of the data within the given file.</returns>
-        public IEnumerable<T> ReadCsvData<T>(string fileName)
+        public async Task<List<T>> ReadCsvData<T>(IFileReader fileReader)
         {
-            if (!File.Exists(fileName)) throw new CsvFileException($"Unable to load file: {fileName}");
-            using var stream = FixBhqFile(fileName);
+            using var stream = await FixBhqFile(fileReader);
             using var csv = new CsvReader(stream, _configuration);
             return csv.GetRecords<T>().ToList(); 
         }
@@ -39,9 +39,9 @@ namespace FantasyBaseball.BhqStatsService.Services
         /// <summary>Reads in the file and merges the multiple header rows into a single header.</summary>
         /// <param name="fileName">The file name to process.</param>
         /// <returns>A stream containing the header row and the rest of the data.</returns>
-        private static TextReader FixBhqFile(string fileName)
+        private static async Task<TextReader> FixBhqFile(IFileReader fileReader)
         {
-            var lines = File.ReadLines(fileName).ToList();
+            var lines = await fileReader.ReadLines();
             var headers = MergeHeaderRows(FindHeaderRows(lines));
             headers.AddRange(lines.Where(l => !l.StartsWith("Player")).Where(l => !l.StartsWith("(Generated")));
             return new StringReader(string.Join(Environment.NewLine, headers));
